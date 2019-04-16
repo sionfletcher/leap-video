@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leapjs/0.6.1/leap.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+
+        video {
+            background: black;
+            object-fit: cover;
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <video id="vid" muted>
+        <!-- Change this -->
+        <source src="bristol.mp4" />
+    </video>
+
+    <script>
+        const map = (num, in_min, in_max, out_min, out_max) => {
+            return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+        }
+
+        var vid = document.getElementById('vid');
+        var prev = 0;
+        Leap.loop(function (frame) {
+
+            if (!frame.hands.length) return;
+
+            var x = frame.hands[0].palmPosition[0]
+            var t = map(x, -350, 350, 0, 1);
+            t = Math.max(t, 0);
+            t = Math.min(t, 1);
+
+            var x = Math.floor(vid.duration * t * 5) / 5;
+            vid.currentTime = x;
+        });
+    </script>
+</body>
