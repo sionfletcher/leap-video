@@ -41,8 +41,7 @@
             t = Math.max(t, 0);
             t = Math.min(t, 1);
 
-            var x = Math.floor(vid.duration * t * 5) / 5;
-            vid.currentTime = x;
+            vid.currentTime = Math.floor(vid.duration * t * 5) / 5;
         });
     </script>
 </body>
